@@ -49,3 +49,14 @@ test('calculator', () => {
   expect(calculator.divide()).toBeCloseTo(1.5);
   expect(calculator.multiply()).toEqual(6);
 });
+
+
+//Caesar Cipher
+
+const caesar = (str, key) => {
+  return str.toUpperCase().replace(/[A-Z]/g, element => String.fromCharCode(((element.charCodeAt(0) - 65 + key) % 26) + 65));
+};
+
+test('caesar', () => {
+  expect(caesar('hello', 2)).toBe('JGNNQ');
+});
