@@ -53,29 +53,39 @@ test('calculator', () => {
 
 //Caesar Cipher
 
-//check if letter is uppercase
-function isUpperCase(str) {
-  return str === str.toUpperCase();
-}
+function caesar(text, key) {
+  let alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  let fullAlphabet = alphabet + alphabet + alphabet;
 
-//decipher the string
-let caesar = (str, key) => {
-  let decipher = '';
+  key = key % alphabet.length;
+  var cipherFinish = '';
 
-  //decipher each letter
-  for (let i = 0; i < str.length; i++) {
-    //if letter is uppercase then add uppercase letters
-    if (isUpperCase(str[i])) {
-      decipher += String.fromCharCode(((str.charCodeAt(i) + key - 65) % 26) + 65);
+  for (i = 0; i < text.length; i++) {
+    var letter = text[i];
+    var upper = letter == letter.toUpperCase();
+    letter = letter.toLowerCase();
+
+    var index = alphabet.indexOf(letter);
+    if (index == -1) {
+      cipherFinish += letter;
     } else {
-      //else add lowercase letters
-      decipher += String.fromCharCode(((str.charCodeAt(i) + key - 97) % 26) + 97);
+      index = index + key + alphabet.length;
+      var nextLetter = fullAlphabet[index];
+      if (upper) {
+        nextLetter = nextLetter.toUpperCase();
+      }
+      cipherFinish += nextLetter;
     }
   }
 
-  return decipher;
-};
+  return cipherFinish;
+}
 
 test('caesar', () => {
-  expect(caesar('Hello', 2)).toBe('Jgnnq');
+  expect(caesar('Hello!', 2)).toBe('Jgnnq!');
+  expect(caesar('Jgnnq', -2)).toBe('Hello');
+  expect(caesar('Zena', 30)).toBe('Dire');
+  expect(caesar('Dire', -30)).toBe('Zena');
+  expect(caesar('See me', 3)).toBe('Vhh ph');
+  expect(caesar('Vhh ph', -3)).toBe('See me');
 });
