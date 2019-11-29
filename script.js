@@ -53,10 +53,29 @@ test('calculator', () => {
 
 //Caesar Cipher
 
-const caesar = (str, key) => {
-  return str.toUpperCase().replace(/[A-Z]/g, element => String.fromCharCode(((element.charCodeAt(0) - 65 + key) % 26) + 65));
+//check if letter is uppercase
+function isUpperCase(str) {
+  return str === str.toUpperCase();
+}
+
+//decipher the string
+let caesar = (str, key) => {
+  let decipher = '';
+
+  //decipher each letter
+  for (let i = 0; i < str.length; i++) {
+    //if letter is uppercase then add uppercase letters
+    if (isUpperCase(str[i])) {
+      decipher += String.fromCharCode(((str.charCodeAt(i) + key - 65) % 26) + 65);
+    } else {
+      //else add lowercase letters
+      decipher += String.fromCharCode(((str.charCodeAt(i) + key - 97) % 26) + 97);
+    }
+  }
+
+  return decipher;
 };
 
 test('caesar', () => {
-  expect(caesar('hello', 2)).toBe('JGNNQ');
+  expect(caesar('Hello', 2)).toBe('Jgnnq');
 });
