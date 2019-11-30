@@ -89,3 +89,25 @@ test('caesar', () => {
   expect(caesar('See me', 3)).toBe('Vhh ph');
   expect(caesar('Vhh ph', -3)).toBe('See me');
 });
+
+
+//Array Analysis. Write a function that takes an array of numbers and returns an object with the following properties: average, min, max, and length.
+
+const analyze = arr => {
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+  let myObj = {
+    average: arr.reduce(reducer) / arr.length,
+    min: Math.min.apply(Math, arr),
+    max: Math.max.apply(Math, arr),
+    length: arr.length
+  };
+
+  return myObj;
+};
+
+test('analyze', () => {
+  expect(analyze([1, 8, 3, 4, 2, 6])).toMatchObject({average: 4, min: 1, max: 8, length: 6});
+
+  expect(analyze([666, 89, 567, -1])).toMatchObject({average: 330.25, min: -1, max: 666, length: 4});
+});
